@@ -108,7 +108,7 @@ def parse_args():
     """
     parser = argparse.ArgumentParser(description="A script that can be used to asciify one image or multiple images.")
     parser.add_argument('in_path', type=str, help='Path to the raw data. Can be a single image or a directory containing multiple images.')
-    parser.add_argument('out_path', type=str, help='Path to where you want the converted image(s) to be saved.')
+    parser.add_argument('out_path', type=str, help='Path to where you want to save the converted image(s).')
     parser.add_argument('--font', default=os.path.join("fonts","MajorMonoDisplay-Regular.ttf"), type=str, help='Path to font file, USE MONO!')
     parser.add_argument('--fontsize', default=10, type=int, help='Which font size should be used?')
     parser.add_argument('--boldness', default=0, type=int, help='How bold should the letters be? Increase, if the image is too dark.')

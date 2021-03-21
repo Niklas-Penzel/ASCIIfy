@@ -24,7 +24,7 @@ A script that can be used to asciify one image or multiple images.
 positional arguments:
   in_path              Path to the raw data. Can be a single image or a 
                        directory containing multiple images.
-  out_path             Path to where you want the converted image(s) to be saved.
+  out_path             Path to where you want to save the converted image(s).
 
 optional arguments:
   -h, --help           show this help message and exit
