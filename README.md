@@ -1,6 +1,13 @@
 # ASCIIfy
 A simple script to ASCIIfy images using the python image library.
 
+## Examples
+Input
+![alt text](examples/starry_night.jpg)
+
+ASCIIfied
+![alt text](examples/ascii_starry_night.jpg)
+
 ## Installation
 * pip:
 ```
@@ -36,10 +43,3 @@ optional arguments:
                        that the resulting image has approximately the same dimensions
                        as the input.
 ```
-
-## Examples
-Input
-![alt text](examples/starry_night.jpg)
-
-ASCIIfied
-![alt text](examples/ascii_starry_night.jpg)
