@@ -4,7 +4,8 @@ import os
 from tqdm import tqdm
 from PIL import Image, ImageFont, ImageDraw
 import argparse
-
+from multiprocessing import Pool, get_context
+import multiprocessing as mp
 
 def get_font_dim(font):
     """
@@ -107,6 +108,22 @@ def ASCIIfy_(in_path, out_path, resize, font_path, font_size, stroke_width, verb
     ASCIIfy(np.array(Image.open(in_path)), resize, font_path, font_size, stroke_width, verbose=verbose).save(out_path)
 
 
+class ASCIIfier(object):
+    """
+    Function object to multiprocess the asciification.
+    """
+    def __init__(self, resize, font_path, font_size, stroke_width, verbose=1):
+        self.resize = resize
+        self.font_path = font_path
+        self.font_size = font_size
+        self.stroke_width = stroke_width
+        self.verbose = verbose
+
+    def __call__(self, paths):
+        in_path, out_path = paths
+        ASCIIfy_(in_path, out_path, self.resize, self.font_path, self.font_size, self.stroke_width, verbose=self.verbose)
+
+
 def parse_args():
     """
     parses the commandline arguments.
@@ -118,6 +135,7 @@ def parse_args():
     parser.add_argument('--fontsize', default=10, type=int, help='Which font size should be used?')
     parser.add_argument('--boldness', default=0, type=int, help='How bold should the letters be? Increase, if the image is too dark.')
     parser.add_argument('--resize', default=-1, type=int, help='By how much should the image be resized before asciifying it. If -1 it will choose a resize corresponding to the fontsize so that the resulting image has approximately the same dimensions as the input.')
+    parser.add_argument('--n_workers', default=-1, type=int, help='How many processes should be started? If -1 it uses the number of cores.')
 
     args = parser.parse_args()
     return args
@@ -132,8 +150,20 @@ if __name__ == "__main__":
         if not os.path.isdir(args.out_path):
             os.makedirs(args.out_path)
 
-        for f in tqdm(os.listdir(args.in_path)):
-            try:
-                ASCIIfy_(os.path.join(args.in_path, f), os.path.join(args.out_path, f), args.resize, args.font, args.fontsize, args.boldness, verbose=0)
-            except Exception as e:
-                print(e)
+        if args.n_workers == 1:
+            for f in tqdm(os.listdir(args.in_path)):
+                try:
+                    ASCIIfy_(os.path.join(args.in_path, f), os.path.join(args.out_path, f), args.resize, args.font, args.fontsize, args.boldness, verbose=0)
+                except Exception as e:
+                    print(e)
+        else:
+            asciifier = ASCIIfier(args.resize, args.font, args.fontsize, args.boldness, verbose=0)
+            if args.n_workers < 0:
+                args.n_workers = mp.cpu_count()
+
+            paths = [(os.path.join(args.in_path, f), os.path.join(args.out_path, f)) for f in os.listdir(args.in_path)]
+
+            print(f"Start multiprocessing with {args.n_workers} workers.")
+
+            with get_context("spawn").Pool(args.n_workers) as p:
+                list(tqdm(p.imap(asciifier, paths), total=len(paths)))
