@@ -44,7 +44,7 @@ def convert_intensity_to_symbol(pixel_val):
         return np.random.choice(char_list[idx])
 
 
-def ASCIIfy(img, resize, font_path, font_size, stroke_width):
+def ASCIIfy(img, resize, font_path, font_size, stroke_width, verbose=1):
     """
     expects a numpy array encoding an image and returns 
     an PIL image containing an asciified version
@@ -80,7 +80,12 @@ def ASCIIfy(img, resize, font_path, font_size, stroke_width):
     editable_ascii_img = ImageDraw.Draw(pil_ascii_img)
 
     # iterate over the pixels
-    for idx in tqdm(np.ndindex(img_resized.shape[:2]), total=img_resized.shape[0]*img_resized.shape[1]):
+    if verbose > 0:
+        it = tqdm(np.ndindex(img_resized.shape[:2]), total=img_resized.shape[0]*img_resized.shape[1])
+    else:
+        it = np.ndindex(img_resized.shape[:2])
+
+    for idx in it:
         # get the color
         color = tuple(img_resized[idx])
         # get the position of the letter in the new image
@@ -94,12 +99,12 @@ def ASCIIfy(img, resize, font_path, font_size, stroke_width):
     return pil_ascii_img
 
 
-def ASCIIfy_(in_path, out_path, resize, font_path, font_size, stroke_width):
+def ASCIIfy_(in_path, out_path, resize, font_path, font_size, stroke_width, verbose=1):
     """
     loads the image under in_path and outputs the image with
     the minimun psnr to out_path.
     """
-    ASCIIfy(np.array(Image.open(in_path)), resize, font_path, font_size, stroke_width).save(out_path)
+    ASCIIfy(np.array(Image.open(in_path)), resize, font_path, font_size, stroke_width, verbose=verbose).save(out_path)
 
 
 def parse_args():
@@ -129,6 +134,6 @@ if __name__ == "__main__":
 
         for f in tqdm(os.listdir(args.in_path)):
             try:
-                ASCIIfy_(os.path.join(args.in_path, f), os.path.join(args.out_path, f), args.resize, args.font, args.fontsize, args.boldness)
+                ASCIIfy_(os.path.join(args.in_path, f), os.path.join(args.out_path, f), args.resize, args.font, args.fontsize, args.boldness, verbose=0)
             except Exception as e:
                 print(e)
