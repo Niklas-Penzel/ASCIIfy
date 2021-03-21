@@ -3,10 +3,13 @@ A simple script to ASCIIfy images using the python image library.
 
 ## Installation
 * pip:
-    pip3 install -r requirements.txt
-
+```
+pip3 install -r requirements.txt
+```
 * conda:
-    conda env create -f environment.yml
+```
+conda env create -f environment.yml
+```
 
 ## Usage
 ```
