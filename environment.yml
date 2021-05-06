@@ -1,6 +1,0 @@
-name: asciify
-dependencies:
-  - python>=3.5
-  - pip
-  - pip:
-    - -r file:requirements.txt
