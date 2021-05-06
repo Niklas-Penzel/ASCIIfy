@@ -1,16 +1,21 @@
 <template>
-  <HelloWorld />
+  <div>
+    <HelloWorld />
+    <drag-and-drop />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue";
+import DragAndDrop from "./components/DragAndDrop.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    HelloWorld,
+    DragAndDrop,
+  },
+};
 </script>
 
 <style>
@@ -19,7 +24,17 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  display: flex;
+  width: 100%;
+  align-content: center;
+  justify-content: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 </style>
