@@ -1,0 +1,54 @@
+{
+  "name": "vue-webapp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@innologica/vue-dropdown-menu": "^0.1.4",
+    "@vueform/multiselect": "^1.4.0",
+    "@vueform/slider": "^1.0.5",
+    "@vueform/toggle": "^1.1.0",
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
+    "vue": "^3.0.0",
+    "vue-next-select": "^2.1.1",
+    "vue-round-slider": "^1.0.1",
+    "vue-upload-drop-images": "^1.0.4",
+    "vue3-slider": "^1.6.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0",
+    "sass-loader": "^10.1.1",
+    "style-resources-loader": "^1.4.1",
+    "vue-cli-plugin-style-resources-loader": "~0.1.5"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

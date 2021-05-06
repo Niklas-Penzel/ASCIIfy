@@ -19,8 +19,8 @@ def get_font_dim(font):
     width, height = _ed.textsize(".", font=font)
     width_, height_ = _ed.textsize("M", font=font)
     
-    assert width == width_ # check if mono
-    assert height == height_ # check if mono
+    #assert width == width_ # check if mono
+    #assert height == height_ # check if mono
     return width, height
 
 
