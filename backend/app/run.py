@@ -8,6 +8,8 @@ from flask_talisman import Talisman
 from PIL import Image
 from pathlib import Path
 from asciify import ASCIIfy
+from io import BytesIO
+import base64
 
 app = Flask(__name__)
 app.config.from_object("config.DevConfig")
@@ -95,15 +97,19 @@ class ASCIIfy_Image(Resource):
             1,
         )
 
-        _, cv_image = cv2.imencode(
-            f".{str(file).split('.')[-1]}", np.array(asciified)[..., ::-1]
-        )
+        data = BytesIO()
+        asciified.save(data, "JPEG")
+        data64 = base64.b64encode(data.getvalue())
+
+        #_, cv_image = cv2.imencode(
+        #    ".jpeg", np.array(asciified)[..., ::-1]
+        #)
 
         # headers = {
         #    'Content-Type': "image/jpeg",    # This is important
         # }
         # why?
-        return Response(response=cv_image.tostring(), status=200, mimetype="image/jpeg")
+        return Response(response=data64.decode('utf-8'), status=200, mimetype="image/jpeg")
 
 
 api.add_resource(Home, "/api/home")
