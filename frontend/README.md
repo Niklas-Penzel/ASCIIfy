@@ -1,4 +1,4 @@
-# vue-webapp
+# ASCIIfy Frontend
 
 ## Project setup
 ```
