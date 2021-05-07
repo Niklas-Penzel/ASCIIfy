@@ -1,11 +1,8 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { createApp } from 'vue'
+import vuetify from './plugins/vuetify'
+import App from './App.vue'
 
-library.add(fas);
+const app = createApp(App)
+app.use(vuetify)
 
-createApp(App)
-  .component("fa", FontAwesomeIcon)
-  .mount("#app");
+app.mount('#app')

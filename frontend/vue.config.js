@@ -4,5 +4,9 @@ module.exports = {
       preProcessor: 'sass',
       patterns: []
     }
-  }
+  },
+
+  transpileDependencies: [
+    'vuetify'
+  ]
 }

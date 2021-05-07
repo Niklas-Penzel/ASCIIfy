@@ -12,18 +12,22 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/vue-fontawesome": "^3.0.0-3",
     "@innologica/vue-dropdown-menu": "^0.1.4",
+    "@mdi/font": "5.9.55",
     "@vueform/multiselect": "^1.4.0",
     "@vueform/slider": "^1.0.5",
     "@vueform/toggle": "^1.1.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "roboto-fontface": "*",
     "vue": "^3.0.0",
     "vue-next-select": "^2.1.1",
     "vue-round-slider": "^1.0.1",
     "vue-upload-drop-images": "^1.0.4",
-    "vue3-slider": "^1.6.2"
+    "vue3-slider": "^1.6.2",
+    "vuetify": "^3.0.0-alpha.0"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
@@ -31,9 +35,11 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
+    "sass": "^1.32.0",
     "sass-loader": "^10.1.1",
     "style-resources-loader": "^1.4.1",
-    "vue-cli-plugin-style-resources-loader": "~0.1.5"
+    "vue-cli-plugin-style-resources-loader": "~0.1.5",
+    "vue-cli-plugin-vuetify": "~2.4.0"
   },
   "eslintConfig": {
     "root": true,

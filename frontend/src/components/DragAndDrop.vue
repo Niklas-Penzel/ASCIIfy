@@ -5,17 +5,18 @@
       @dragover="dragover"
       @dragleave="dragleave"
       @drop="drop"
-      :class="{ active: active }"
+      @click="$refs.fsFileInput.click()"
+      :class="{ active: active, uploaded: uploaded }"
     >
-      <img v-if="fileURL != ''" :src="fileURL" />
+      <div v-if="fileURL != ''">
+        <img :src="fileURL" />
+      </div>
       <div v-else class="inner">
-        <fa class="icon" icon="cloud-upload-alt" size="6x" />
-        <header>{{ dragText }}</header>
+        <v-icon class="icon" size="70">fas fa-cloud-upload-alt</v-icon>
+        <header>Drag & Drop or Click to Upload File</header>
         <input ref="fsFileInput" type="file" @change="handleFileChange" />
       </div>
     </div>
-
-    <button @click="$refs.fsFileInput.click()">Choose A File</button>
   </div>
 </template>
 <script>
@@ -25,23 +26,22 @@ export default {
   setup() {
     const file = ref("");
     const fileURL = ref("");
-    const dragText = ref("Drag & Drop to Upload File");
     const active = ref(false);
+    const uploaded = ref(false);
 
     const handleFileChange = function (event) {
       active.value = true;
       file.value = event.target.files[0];
       showFile();
+      uploaded.value = true;
     };
 
     const dragover = function (event) {
       event.preventDefault();
       active.value = true;
-      dragText.value = "Release to Upload File";
     };
     const dragleave = function () {
       active.value = false;
-      dragText.value = "Drag & Drop to Upload File";
     };
 
     const showFile = function () {
@@ -62,15 +62,16 @@ export default {
       event.preventDefault();
       file.value = event.dataTransfer.files[0];
       showFile(event);
+      uploaded.value = true;
     };
     return {
       dragover,
       dragleave,
       drop,
       fileURL,
-      dragText,
       handleFileChange,
       active,
+      uploaded,
     };
   },
 };
@@ -82,17 +83,20 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin: 0 auto;
+  max-width: 520px;
+  cursor: pointer;
 }
 
 .drag-area {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px dashed #c2cdda;
-  height: 300px;
-  width: 500px;
-  border-radius: 5px;
+  outline: 2px dashed #92b0b3;
   flex-direction: column;
+  outline-offset: -6px;
+  background-color: #c8dadf;
+  transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
 }
 
 .drag-area .inner {
@@ -102,25 +106,25 @@ export default {
   justify-content: center;
   width: 100%;
   height: 100%;
+  padding: 50px 100px;
 }
 
 .drag-area.active {
-  border: 2px solid #c2cdda;
+  outline-offset: -12px;
+  background-color: rgb(250, 250, 250);
+}
+.drag-area.active.uploaded {
+  outline: none;
 }
 
 .drag-area .icon {
-  color: #29abe2;
+  color: var(--primary-base);
 }
 .drag-area header {
-  color: #29abe2;
-  font-size: 30px;
+  color: var(--primary-base);
+  font-size: 20px;
   font-weight: 500;
-}
-
-.drag-area span {
-  color: #29abe2;
-  font-size: 25px;
-  font-weight: 500;
+  margin-top: 10px;
 }
 
 button {
@@ -131,8 +135,8 @@ button {
   font-weight: 500;
   border: none;
   outline: none;
-  background: #29abe2;
-  color: black;
+  background: var(--primary-base);
+  color: white;
   border-radius: 20px;
   cursor: pointer;
 }
@@ -141,7 +145,6 @@ button {
   height: 100%;
   width: 100%;
   object-fit: cover;
-  border-radius: 3px;
 }
 
 .drag-area input {
