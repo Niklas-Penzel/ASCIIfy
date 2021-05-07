@@ -14,13 +14,18 @@
       <div v-else class="inner">
         <v-icon class="icon" size="70">fas fa-cloud-upload-alt</v-icon>
         <header>Drag & Drop or Click to Upload File</header>
-        <input ref="fsFileInput" type="file" @change="handleFileChange" />
+        <input
+          ref="fsFileInput"
+          type="file"
+          @change.prevent="handleFileChange"
+        />
       </div>
     </div>
   </div>
 </template>
 <script>
 import { ref } from "vue";
+import { resultStore } from "../store/result-store";
 export default {
   name: "DragAndDrop",
   setup() {
@@ -33,6 +38,7 @@ export default {
       active.value = true;
       file.value = event.target.files[0];
       showFile();
+      resultStore.setAsciifiedImageURL(file.value);
       uploaded.value = true;
     };
 
@@ -52,8 +58,8 @@ export default {
         active.value = false;
       }
       let fileReader = new FileReader();
-      fileReader.onload = () => {
-        fileURL.value = fileReader.result;
+      fileReader.onload = (event) => {
+        fileURL.value = event.target.result;
       };
       fileReader.readAsDataURL(file.value);
     };
@@ -62,6 +68,7 @@ export default {
       event.preventDefault();
       file.value = event.dataTransfer.files[0];
       showFile(event);
+      resultStore.setAsciifiedImageURL(file.value);
       uploaded.value = true;
     };
     return {

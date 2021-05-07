@@ -49,9 +49,7 @@ import axios from "axios";
 import Multiselect from "@vueform/multiselect";
 import Toggle from "@vueform/toggle";
 import Slider from "@vueform/slider";
-
 const API_URL = "http://127.0.0.1:5000";
-
 export default {
   components: {
     UploadImages,
@@ -67,18 +65,19 @@ export default {
         let reader = new FileReader();
         reader.onload = (e) => {
           this.uploadedImage = e.target.result;
+          console.log("ONLOAD", this.uploadedImage);
           this.sendRequest();
         };
         reader.readAsDataURL(files[0]);
 
         this.uploadedImage = files[0];
+        console.log("handleImages", this.uploadedImage);
       } else {
         this.asciifiedImage = "";
         this.uploadedImage = "";
       }
     },
     handleFonts(value) {
-      console.log(value);
       if (value != null) {
         this.selectedFont = value;
         this.sendRequest();
@@ -128,7 +127,6 @@ export default {
           .post(`${API_URL}/api/asciify`, data)
           .then(function (response) {
             if (self.uploadedImage != "") {
-              console.log(response);
               self.asciifiedImage = "data:img/jpeg;base64," + response.data;
             }
           })
