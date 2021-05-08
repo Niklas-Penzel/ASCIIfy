@@ -1,51 +1,53 @@
 <template>
   <div>
     <div class="select-box">
-      <div v-if="fonts" class="options-container" :class="{ active: active }">
+      <div class="options-container" :class="{ active: active }">
         <div
           class="option"
-          v-for="font in fonts"
-          :key="font"
-          @click="setFont(font)"
+          v-for="value in values"
+          :key="value"
+          @click="setValue(value)"
+          :class="{ current: value == modelValue }"
         >
-          <input type="radio" class="radio" name="category" :id="font" />
-          <label for="test-font1">{{ font }}</label>
+          <input type="radio" class="radio" name="category" :id="value" />
+          <label :for="value">{{ value }}</label>
         </div>
       </div>
       <div class="selected" @click="active = !active">
-        {{ currentFont }} <v-icon>fas fa-chevron-down</v-icon>
+        {{ modelValue }} <v-icon>fas fa-chevron-down</v-icon>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import backend from "../api/backend";
+import { ref } from "vue";
 export default {
   name: "SelectOption",
-  setup() {
-    const fonts = ref([]);
+  props: {
+    values: {
+      type: Array,
+      required: true,
+    },
+    modelValue: {
+      type: String,
+    },
+    default: {
+      type: String,
+      default: "Select",
+    },
+  },
+  setup(props, { emit }) {
     const active = ref(false);
-    const currentFont = ref("Select Font");
-
-    onMounted(() => {
-      backend.getFonts().then((data) => {
-        fonts.value = data;
-        if (fonts.value.includes("MajorMonoDisplay-Regular")) {
-          currentFont.value = "MajorMonoDisplay-Regular";
-        } else {
-          currentFont.value = data[0];
-        }
-      });
-    });
-
-    const setFont = function (font) {
-      currentFont.value = font;
+    const setValue = function (value) {
       active.value = false;
+      if (value == props.modelValue) {
+        emit("update:modelValue", props.default);
+      } else {
+        emit("update:modelValue", value);
+      }
     };
-
-    return { fonts, active, setFont, currentFont };
+    return { active, setValue };
   },
 };
 </script>
@@ -118,6 +120,10 @@ export default {
 }
 
 .select-box .option:hover {
+  background-color: #414b57;
+}
+
+.select-box .option.current {
   background-color: #414b57;
 }
 

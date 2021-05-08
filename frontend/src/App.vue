@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <h1 class="logo">ASCIIfy</h1>
+      <h1 class="logo">ArtSCIIfy</h1>
       <div class="main-container">
         <settings />
         <drag-and-drop />
@@ -60,6 +60,13 @@ body::-webkit-scrollbar-thumb {
   display: flex;
   width: 90%;
   margin: auto;
+}
+
+@media screen and (max-width: 900px) {
+  .main-container {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .logo {

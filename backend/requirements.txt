@@ -1,8 +1,9 @@
 opencv-python~=4.5
-numpy~=1.20
+numpy~=1.19
 tqdm~=4.60
 Pillow~=8.2
 flask~=1.1
 flask-cors~=3.0
 flask-restful~=0.3.8
 flask-talisman~=0.7.0
+tensorflow~=2.5

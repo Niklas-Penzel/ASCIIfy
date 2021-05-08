@@ -24,21 +24,29 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { resultStore } from "../store/result-store";
 export default {
   name: "DragAndDrop",
   setup() {
-    const file = ref("");
     const fileURL = ref("");
     const active = ref(false);
     const uploaded = ref(false);
+
+    const file = computed({
+      get: () => {
+        return resultStore.getState().file;
+      },
+      set: (value) => {
+        resultStore.setFile(value);
+      },
+    });
 
     const handleFileChange = function (event) {
       active.value = true;
       file.value = event.target.files[0];
       showFile();
-      resultStore.setAsciifiedImageURL(file.value);
+      resultStore.getResultImageURL();
       uploaded.value = true;
     };
 
@@ -68,7 +76,7 @@ export default {
       event.preventDefault();
       file.value = event.dataTransfer.files[0];
       showFile(event);
-      resultStore.setAsciifiedImageURL(file.value);
+      resultStore.getResultImageURL();
       uploaded.value = true;
     };
     return {

@@ -1,5 +1,5 @@
 <template>
-  <img class="result" :src="resultState.asciifiedImageURL" />
+  <img class="result" :src="resultState.resultImageURL" />
 </template>
 
 <script>
